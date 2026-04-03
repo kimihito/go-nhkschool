@@ -88,6 +88,12 @@ func (c *Client) ListByCSCode(ctx context.Context, cscode string, opts *ListOpti
 
 // SearchByKeyword searches videos by keyword and optional filters.
 func (c *Client) SearchByKeyword(ctx context.Context, params *KeywordParams) (*ListResponse, error) {
+	if params == nil {
+		return nil, fmt.Errorf("nhkschool: params must not be nil")
+	}
+	if params.Keywords == "" {
+		return nil, fmt.Errorf("nhkschool: keywords must not be empty")
+	}
 	if params.SubjectAreas != nil && params.Subjects != nil {
 		return nil, fmt.Errorf("nhkschool: subjectareas and subjects cannot be specified together")
 	}
