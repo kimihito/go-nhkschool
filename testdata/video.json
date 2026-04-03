@@ -1,0 +1,49 @@
+{
+  "queryData": {
+    "uri": "https://api.nhk.or.jp/school/v2/nfsvideo/id/D0005110412_00000"
+  },
+  "result": [
+    {
+      "id": "D0005110412_00000",
+      "contentType": "ばんぐみ",
+      "name": "とじこめられた空気",
+      "about": {
+        "nfsSeriesName": "ふしぎエンドレス　理科４年"
+      },
+      "description": "空気でっぽうの説明",
+      "text": null,
+      "url": "https://www2.nhk.or.jp/school/watch/bangumi/?das_id=D0005110412_00000",
+      "thumbnailUrl": "https://www.nhk.or.jp/das/image/D0005110/D0005110412_00000_S_001.jpg",
+      "grades": ["小4"],
+      "subjectAreas": ["理科"],
+      "subjects": [],
+      "curriculumStandard": [
+        {
+          "curriculumStandardVersion": "8",
+          "curriculumStandardNfsId": "小学 理科 4年 A 1 ア ア",
+          "curriculumStandardCode": "8260243111100000"
+        }
+      ],
+      "keywords": ["空気", "体積"],
+      "duration": "PT0H10M0S",
+      "uploadDate": "2018-11-06T04:00:00+09:00",
+      "dateModified": "2022-08-17T12:51:02+09:00",
+      "datePublished": "2018-11-06T09:30:00+09:00",
+      "expires": null,
+      "regionsAllowed": null,
+      "usageInfo": "streaming",
+      "bitrate": "512kbps",
+      "height": 360,
+      "width": 640,
+      "hasPart": [
+        {
+          "clipNumber": 1,
+          "startOffset": 0,
+          "endOffset": 24.991,
+          "thumbnailUrl": "https://www.nhk.or.jp/das/image/D0005110/D0005110412_00000_C_001.jpg",
+          "name": "オープニング"
+        }
+      ]
+    }
+  ]
+}
