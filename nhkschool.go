@@ -1,3 +1,29 @@
+// Package nhkschool provides a client for the NHK for School API v2.
+//
+// It supports all four API endpoints: content detail, content list by curriculum
+// standard code, keyword search, and bulk TSV data retrieval.
+//
+// # Getting Started
+//
+// Create a client with your API key:
+//
+//	client, err := nhkschool.NewClient("YOUR_API_KEY")
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//
+// Retrieve a video by ID:
+//
+//	video, err := client.GetVideo(ctx, "D0005110412_00000")
+//
+// # Error Handling
+//
+// Non-2xx responses return an *APIError:
+//
+//	var apiErr *nhkschool.APIError
+//	if errors.As(err, &apiErr) {
+//		// apiErr.StatusCode, apiErr.Body
+//	}
 package nhkschool
 
 import (

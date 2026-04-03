@@ -79,21 +79,44 @@ type ListResponse struct {
 
 // ListOptions are optional parameters for ListByCSCode.
 type ListOptions struct {
+	// IncludeLower controls whether lower-level curriculum codes are included.
+	// 0 = exact match only, 1 = include lower codes.
 	IncludeLower *int
-	ResultOrder  *int
-	ContentType  *int
-	Page         *int
-	PerPage      *int
+	// ResultOrder specifies the sort order of results.
+	// 0 = popular (default), 1 = updated.
+	ResultOrder *int
+	// ContentType filters the content type.
+	// 0 = all, 1 = bangumi, 2 = clip.
+	ContentType *int
+	// Page is the 1-based page number.
+	Page *int
+	// PerPage is the number of results per page.
+	PerPage *int
 }
 
 // KeywordParams are the parameters for SearchByKeyword.
+//
+// Grades and Subjects use NHK's numeric codes.
+// For example, "24" means 小学4年 (4th grade elementary school).
 type KeywordParams struct {
-	Keywords     string
-	Grades       []string
+	// Keywords is the search query string. Must not be empty.
+	Keywords string
+	// Grades filters by grade using NHK numeric codes (e.g. "24" for 小学4年).
+	// Multiple grades are OR-combined.
+	Grades []string
+	// SubjectAreas filters by subject area. Cannot be used together with Subjects.
 	SubjectAreas []string
-	Subjects     []string
-	ResultOrder  *int
-	ContentType  *int
-	Page         *int
-	PerPage      *int
+	// Subjects filters by subject. Cannot be used together with SubjectAreas.
+	// Uses NHK numeric codes.
+	Subjects []string
+	// ResultOrder specifies the sort order of results.
+	// 0 = popular (default), 1 = updated.
+	ResultOrder *int
+	// ContentType filters the content type.
+	// 0 = all, 1 = bangumi, 2 = clip.
+	ContentType *int
+	// Page is the 1-based page number.
+	Page *int
+	// PerPage is the number of results per page.
+	PerPage *int
 }

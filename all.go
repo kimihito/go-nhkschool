@@ -8,7 +8,12 @@ import (
 	"strings"
 )
 
-// GetAll retrieves all video data as a TSV file and parses it into VideoSummary slices.
+// GetAll retrieves all video data from the bulk TSV endpoint and parses it into
+// a slice of VideoSummary.
+//
+// This endpoint returns all videos in a single TSV response, which may be large.
+// Returns nil (not an error) if the API returns an empty dataset.
+// Returns *APIError for non-2xx HTTP responses.
 func (c *Client) GetAll(ctx context.Context) ([]*VideoSummary, error) {
 	u := fmt.Sprintf("%s/nfsvideos/all/nhkforschool.tsv?apikey=%s", c.baseURL, c.apiKey)
 
@@ -60,7 +65,8 @@ func (c *Client) GetAll(ctx context.Context) ([]*VideoSummary, error) {
 	return videos, nil
 }
 
-// splitNonEmpty splits a comma-separated string, returning nil for empty input.
+// splitNonEmpty splits a comma-separated string into a slice of trimmed strings.
+// Returns nil if the input is empty or whitespace-only.
 func splitNonEmpty(s string) []string {
 	s = strings.TrimSpace(s)
 	if s == "" {

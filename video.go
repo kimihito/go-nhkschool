@@ -22,7 +22,10 @@ type listRawResponse struct {
 	Result     []*Video `json:"result"`
 }
 
-// GetVideo retrieves a single video by its ID.
+// GetVideo retrieves a single video by its ID from the content detail API.
+//
+// The id parameter is the video's das_id (e.g., "D0005110412_00000").
+// Returns *APIError for non-2xx HTTP responses.
 func (c *Client) GetVideo(ctx context.Context, id string) (*Video, error) {
 	u := fmt.Sprintf("%s/nfsvideo/id/%s?apikey=%s", c.baseURL, url.PathEscape(id), url.QueryEscape(c.apiKey))
 
@@ -44,6 +47,10 @@ func (c *Client) GetVideo(ctx context.Context, id string) (*Video, error) {
 }
 
 // ListByCSCode retrieves videos matching a curriculum standard code.
+//
+// The cscode parameter is a curriculum standard code (e.g., "8260243111100000").
+// opts can be nil for default behavior, or a *ListOptions to customize the request.
+// Returns *APIError for non-2xx HTTP responses.
 func (c *Client) ListByCSCode(ctx context.Context, cscode string, opts *ListOptions) (*ListResponse, error) {
 	q := url.Values{}
 	q.Set("apikey", c.apiKey)
@@ -87,6 +94,10 @@ func (c *Client) ListByCSCode(ctx context.Context, cscode string, opts *ListOpti
 }
 
 // SearchByKeyword searches videos by keyword and optional filters.
+//
+// params must not be nil. params.Keywords must not be empty.
+// params.SubjectAreas and params.Subjects cannot be specified together.
+// Returns *APIError for non-2xx HTTP responses.
 func (c *Client) SearchByKeyword(ctx context.Context, params *KeywordParams) (*ListResponse, error) {
 	if params == nil {
 		return nil, fmt.Errorf("nhkschool: params must not be nil")
