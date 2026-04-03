@@ -1,0 +1,18 @@
+# Build artifacts
+*.test
+*.exe
+nhkschool
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+
+# Design docs and pi tooling
+docs/
+.pi/
