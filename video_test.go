@@ -157,3 +157,54 @@ func TestSearchByKeyword_EmptyKeywords(t *testing.T) {
 		t.Fatal("expected error for empty keywords")
 	}
 }
+
+func TestSearchByKeyword(t *testing.T) {
+	fixture, err := os.ReadFile("testdata/keyword.json")
+	if err != nil {
+		t.Fatalf("reading fixture: %v", err)
+	}
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/nfsvideos/keyword" {
+			t.Errorf("path = %q", r.URL.Path)
+		}
+		q := r.URL.Query()
+		if got := q.Get("keywords"); got != "空気" {
+			t.Errorf("keywords = %q, want %q", got, "空気")
+		}
+		if got := q.Get("grades"); got != "24" {
+			t.Errorf("grades = %q, want %q", got, "24")
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(fixture)
+	}))
+	defer srv.Close()
+
+	client, _ := NewClient("test-key", WithBaseURL(srv.URL))
+	resp, err := client.SearchByKeyword(context.Background(), &KeywordParams{
+		Keywords: "空気",
+		Grades:   []string{"24"},
+	})
+	if err != nil {
+		t.Fatalf("SearchByKeyword() error = %v", err)
+	}
+
+	if resp.TotalCount != 1 {
+		t.Errorf("TotalCount = %d, want 1", resp.TotalCount)
+	}
+	if resp.Videos[0].Name != "とじこめられた空気" {
+		t.Errorf("Name = %q", resp.Videos[0].Name)
+	}
+}
+
+func TestSearchByKeyword_ExclusiveParams(t *testing.T) {
+	client, _ := NewClient("test-key")
+	_, err := client.SearchByKeyword(context.Background(), &KeywordParams{
+		Keywords:     "空気",
+		SubjectAreas: []string{"6"},
+		Subjects:     []string{"411"},
+	})
+	if err == nil {
+		t.Fatal("expected error when both SubjectAreas and Subjects are set")
+	}
+}
